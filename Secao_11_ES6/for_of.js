@@ -7,10 +7,10 @@ for(let letra of nome){
 
 let numeros = [1, 2, 3, 4, 5];
 for(let num of numeros){
-    console.log(num ** 2); // Desta forma não está acessando os indices
+    console.log(num ** 2); // Desta forma não está acessando os indices, retorna somente o valor
 }
 
-/////////// desta forma esta acessando o indice
+/////////// desta forma esta acessando o indice usando o for in  == python
 
 for(let ind in numeros){
     console.log(`Índice : ${ind}, Valor² : ${numeros[ind]**2}`); 
