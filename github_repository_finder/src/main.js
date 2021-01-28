@@ -1,3 +1,5 @@
+import api from "./api";
+
 //document.querySelector('body').style.background = 'orange';
 
 class App{
@@ -22,19 +24,34 @@ class App{
         this.formulario.onsubmit = dadosRepo => this.adicionarListaRepo(dadosRepo);
     }
 
-    adicionarListaRepo(dadosRepo){
+    async adicionarListaRepo(dadosRepo){
 
         //preventDefaul função que evita que a página seja carrega quando um form é submetido
         dadosRepo.preventDefault();
+
+        //recuperando o input do form
+        let input = this.formulario.querySelector('input[id=repositorio]').value;  //console.log(input);
+        
+
+        //se o input vire vazio sair da função
+        if(input.length === 0){
+            return;//sai da função
+        }
+
+        //consumindo a api do fit hub + repo do input
+        let response = await api.get(`repos/${input}`);   //console.log(response);
+
+        //desempacotando os dados do responde que vamos utilizar
+        let {name, description, html_url, owner: {avatar_url}} = response.data;
 
         //Adicionando o repositório na lista
 
         this.listaRepositorios.push({
 
-            nome: "Nerd Fonts",
-            descricao: "Iconic font aggregator, collection, and patcher",
-            imagem: "https://avatars0.githubusercontent.com/u/8083459?v=4",
-            link: "http://github.com/ryanoasis/nerd-fonts"
+            nome: name,
+            descricao: description,
+            imagem: avatar_url,
+            link: html_url
 
         });
 
@@ -59,30 +76,31 @@ class App{
             //<strong>
             let strong = document.createElement('strong');
             let txtNome = document.createTextNode(repo.nome);
-            strong.appendChild(txtNome);
+            strong.appendChild(txtNome);            
 
             //<p>
             let p = document.createElement('p');
-            txtDescricao = document.createTextNode(repo.descricao);
-            p.appendChild(txtDescricao);
+            let txtDescricao = document.createTextNode(repo.descricao);
+            p.appendChild(txtDescricao);            
             
             //<img>
             let img = document.createElement('img');
             img.setAttribute('src', repo.imagem);
-            img.setAttribute('alt', 'imagem do repositório');
+            img.setAttribute('alt', 'imagem do repositório');            
 
             //<a>
             let a = document.createElement('a');
             a.setAttribute('href', repo.link);
             a.setAttribute('target', '_blank');
-            txtLink = document.createTextNode("Acessar")
-            a.appendChild(txtLink);
-        
-        //adicionando todos os elementos no <li>
+            let txtLink = document.createTextNode("Acessar")
+            a.appendChild(txtLink);            
+
+        //adicionando os itens criados na lista <li>
         li.appendChild(strong);
-        li.appendChild(p);
         li.appendChild(img);
+        li.appendChild(p);
         li.appendChild(a);
+
 
         //adicionando o <li> no <ul>
         this.listaHtml.appendChild(li);

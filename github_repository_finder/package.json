@@ -14,11 +14,11 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.12.1"
+    "@babel/polyfill": "^7.12.1",
+    "axios": "^0.21.1"
   },
-  "scripts":{
+  "scripts": {
     "dev": "webpack serve --mode=development",
     "prod": "webpack --mode=production"
   }
-
 }
