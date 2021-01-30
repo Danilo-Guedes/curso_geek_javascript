@@ -7,7 +7,7 @@ class App{
     //método construtor
     constructor(){
         //criando a lista de repositórios
-        this.listaRepositorios = [];
+        this.listaRepositorios = JSON.parse(localStorage.getItem('listaRepositorios')) || [];
 
         //recuperando o formulário do html
         this.formulario = document.querySelector('form');
@@ -17,7 +17,11 @@ class App{
 
         //chamando o método que recupera os dados do formulário
         this.registrarDados(); 
+        
+        //chama o método que rendetiza a lista caso tenha algo no localStorage
+        this.renderizarLista();
     }
+    
 
     registrarDados(){
 
@@ -47,7 +51,7 @@ class App{
 
             //desempacotando os dados do responde que vamos utilizar
             let {name, description, html_url, owner: {avatar_url}} = response.data;
-
+            
             //Adicionando o repositório na lista
 
             this.listaRepositorios.push({
@@ -58,10 +62,12 @@ class App{
                 link: html_url
 
             });
+
+            //salvando a inlcusao do obj na lista no localStorage
+            this.salvaLocalStorage();
  
             //Rendenrizar a tela
             this.renderizarLista();
-            // console.log(this.listaRepositorios);
 
         }catch(erro){
             
@@ -89,8 +95,7 @@ class App{
             li.setAttribute('class', 'list-group-item list-group-item-warning');
             let txtCarregando = document.createTextNode("Aguarde ... O repositório digitado está sendo pesquisado...");
             li.appendChild(txtCarregando);
-            this.listaHtml.appendChild(li);          
-
+            this.listaHtml.appendChild(li);     
 
     }
 
@@ -158,6 +163,11 @@ class App{
         
     }
 
+    salvaLocalStorage(){
+
+        localStorage.setItem('listaRepositorios', JSON.stringify(this.listaRepositorios));
+
+    }
         
 }
 
