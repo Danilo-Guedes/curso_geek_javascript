@@ -38,26 +38,59 @@ class App{
             return;//sai da função
         }
 
-        //consumindo a api do fit hub + repo do input
-        let response = await api.get(`repos/${input}`);   //console.log(response);
+        //Ativa a msg de buscando/carregando
+        this.mostraCarregando();
 
-        //desempacotando os dados do responde que vamos utilizar
-        let {name, description, html_url, owner: {avatar_url}} = response.data;
+        try{
+            //consumindo a api do fit hub + repo do input
+            let response = await api.get(`repos/${input}`);   //console.log(response);
 
-        //Adicionando o repositório na lista
+            //desempacotando os dados do responde que vamos utilizar
+            let {name, description, html_url, owner: {avatar_url}} = response.data;
 
-        this.listaRepositorios.push({
+            //Adicionando o repositório na lista
 
-            nome: name,
-            descricao: description,
-            imagem: avatar_url,
-            link: html_url
+            this.listaRepositorios.push({
 
-        });
+                nome: name,
+                descricao: description,
+                imagem: avatar_url,
+                link: html_url
 
-        //Rendenrizar a tela
-        this.renderizarLista();
-        // console.log(this.listaRepositorios);
+            });
+ 
+            //Rendenrizar a tela
+            this.renderizarLista();
+            // console.log(this.listaRepositorios);
+
+        }catch(erro){
+            
+            //limpando o <li> com a msg de carregando...
+            this.listaHtml.removeChild(document.querySelector('.list-group-item-warning'));
+
+            //limpa msg de erro antiga antes de apresentar a nova
+            let err = this.listaHtml.querySelector('.list-group-item-danger');
+            if(err !== null){
+                this.listaHtml.removeChild(err);
+            }
+
+            //criando <li> para exibir msg de erro de busca
+            let li = document.createElement('li');
+            li.setAttribute('class', 'list-group-item list-group-item-danger');
+            let txtErro = document.createTextNode(`O repositório ${input} não existe`);
+            li.appendChild(txtErro);
+            this.listaHtml.appendChild(li);
+        }
+    }
+
+    mostraCarregando(){
+
+            let li = document.createElement('li');
+            li.setAttribute('class', 'list-group-item list-group-item-warning');
+            let txtCarregando = document.createTextNode("Aguarde ... O repositório digitado está sendo pesquisado...");
+            li.appendChild(txtCarregando);
+            this.listaHtml.appendChild(li);          
+
 
     }
 
