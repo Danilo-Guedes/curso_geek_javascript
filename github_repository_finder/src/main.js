@@ -107,9 +107,9 @@ class App{
         //Percorrer toda a lista de repositórios e criar os elementos
         this.listaRepositorios.forEach(repo => {
 
-        //<li>
-        let li = document.createElement('li');
-        li.setAttribute('class', 'list-group-item list-group-item-action');
+            ///<li>
+            let li = document.createElement('li');
+            li.setAttribute('class', 'list-group-item list-group-item-action');
 
             //<strong>
             let strong = document.createElement('strong');
@@ -133,32 +133,32 @@ class App{
             let txtLink = document.createTextNode("Acessar")
             a.appendChild(txtLink);            
 
-        //adicionando os itens criados na lista <li>
-        li.appendChild(strong);
-        li.appendChild(img);
-        li.appendChild(p);
-        li.appendChild(a);
-
-
-        //adicionando o <li> no <ul>
-        this.listaHtml.appendChild(li);
-
-        /*  MODELO DA LISTA DO HTML
-
-            <li class="list-group-item list-group-item-action">
-            <strong>Nerd Fonts</strong>
-            <p>Iconic font aggregator, collection, and patcher</p>
-            <img src="https://avatars0.githubusercontent.com/u/8083459?v=4" alt="imagem do repositório">
-            <a href="http://github.com/ryanoasis/nerd-fonts" target="_blank">Acessar</a>
-            </li> 
-        */
-
-        //limpando o formulário após submeter
-        this.formulario.querySelector('input[id=repositorio]').value = "";
-
-        //colocando foco no form novamente
-        this.formulario.querySelector('input[id=repositorio]').focus();
-
+            //adicionando os itens criados na lista <li>
+            li.appendChild(strong);
+            li.appendChild(img);
+            li.appendChild(p);
+            li.appendChild(a);
+            
+            
+            //adicionando o <li> no <ul>
+            this.listaHtml.appendChild(li);
+            
+            /*  MODELO DA LISTA DO HTML
+            
+                <li class="list-group-item list-group-item-action">
+                <strong>Nerd Fonts</strong>
+                <p>Iconic font aggregator, collection, and patcher</p>
+                <img src="https://avatars0.githubusercontent.com/u/8083459?v=4" alt="imagem do repositório">
+                <a href="http://github.com/ryanoasis/nerd-fonts" target="_blank">Acessar</a>
+                </li> 
+            */
+            
+            //limpando o formulário após submeter
+            this.formulario.querySelector('input[id=repositorio]').value = "";
+            
+            //colocando foco no form novamente
+            this.formulario.querySelector('input[id=repositorio]').focus();
+            
         });
         
     }
